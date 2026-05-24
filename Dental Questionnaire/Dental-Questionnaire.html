@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dental Website Setup — Brechtland</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0f1c2e;
+  --primary:#2563eb;
+  --primary-light:#eff4ff;
+  --bg:#f8fafc;
+  --white:#ffffff;
+  --slate:#64748b;
+  --border:#e2e8f0;
+  --gold:#e8a23e;
+  --gold-light:#fef5e7;
+  --green:#16a34a;
+  --red:#dc2626;
+  --radius:10px;
+}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;color:var(--ink);background:var(--bg);font-size:14px;line-height:1.5}
+h1,h2,.serif{font-family:'DM Serif Display',serif;font-weight:400}
+
+.page{max-width:780px;margin:0 auto;padding:40px 20px 60px}
+
+.doc-header{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:36px;margin-bottom:28px}
+.doc-header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.doc-brand{font-size:1.05rem;font-weight:800;color:var(--primary);letter-spacing:.3px;display:flex;align-items:center;gap:10px}
+.doc-brand .brand-mark{width:34px;height:34px;background:var(--primary);border-radius:50%;display:grid;place-items:center;flex-shrink:0}
+.doc-brand .brand-mark svg{width:16px;height:16px;fill:#fff}
+.doc-brand span{display:block;font-size:.68rem;font-weight:400;color:var(--slate);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.doc-badge{background:var(--primary-light);color:var(--primary);padding:6px 14px;border-radius:60px;font-size:.72rem;font-weight:700;letter-spacing:.5px}
+.doc-header h1{font-size:1.6rem;color:var(--ink);margin-bottom:6px}
+.doc-header p{color:var(--slate);font-size:.9rem;line-height:1.65}
+.doc-header .time-est{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:.8rem;font-weight:600;color:var(--primary);background:var(--primary-light);padding:6px 14px;border-radius:60px}
+.doc-header .time-est svg{width:14px;height:14px}
+
+.q-section{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:32px;margin-bottom:20px;transition:border-color .3s}
+.q-section:hover{border-color:var(--primary)}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.section-icon{width:42px;height:42px;border-radius:10px;display:grid;place-items:center;flex-shrink:0}
+.section-icon svg{width:20px;height:20px}
+.section-icon.blue{background:var(--primary-light)}
+.section-icon.blue svg{fill:var(--primary)}
+.section-icon.gold{background:var(--gold-light)}
+.section-icon.gold svg{fill:var(--gold)}
+.section-header-text h2{font-size:1.1rem;color:var(--ink);line-height:1.2}
+.section-header-text p{font-size:.78rem;color:var(--slate);font-weight:400;margin-top:2px}
+
+.q-item{margin-bottom:18px}
+.q-item:last-child{margin-bottom:0}
+.q-label{font-size:.78rem;font-weight:600;color:var(--ink);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.q-required{color:var(--red);font-weight:700;font-size:.7rem}
+.q-optional{color:var(--slate);font-weight:400;font-size:.72rem}
+.q-hint{font-size:.72rem;color:var(--slate);font-weight:400;margin-top:1px;margin-bottom:4px}
+.q-field{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Outfit',sans-serif;font-size:.9rem;color:var(--ink);background:var(--bg);outline:none;transition:border .25s,box-shadow .25s}
+.q-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.08)}
+.q-field::placeholder{color:#94a3b8}
+textarea.q-field{resize:vertical;min-height:80px}
+textarea.q-field.tall{min-height:110px}
+.q-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.q-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+
+.radio-group{display:flex;flex-wrap:wrap;gap:10px}
+.radio-item{display:flex;align-items:center;gap:7px;background:var(--bg);padding:9px 16px;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;transition:all .2s;font-size:.85rem;font-weight:500}
+.radio-item:hover{border-color:var(--primary);background:var(--primary-light)}
+.radio-item input{accent-color:var(--primary);width:16px;height:16px;cursor:pointer}
+.radio-item label{cursor:pointer}
+
+.color-row{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-top:8px}
+.color-pick{text-align:center}
+.color-swatch{width:48px;height:48px;border-radius:10px;border:2px solid var(--border);cursor:pointer;overflow:hidden;transition:all .2s}
+.color-swatch:hover{transform:scale(1.08);border-color:var(--primary)}
+.color-swatch input[type="color"]{opacity:0;width:100%;height:100%;cursor:pointer}
+.color-pick .cl{font-size:.68rem;font-weight:500;color:var(--slate);margin-top:4px}
+
+.extras-toggle{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);margin-bottom:20px;overflow:hidden;transition:border-color .3s}
+.extras-toggle:hover{border-color:var(--gold)}
+.extras-btn{width:100%;padding:24px 32px;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-family:'Outfit',sans-serif}
+.extras-btn-left{display:flex;align-items:center;gap:14px}
+.extras-btn h2{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);font-weight:400}
+.extras-btn p{font-size:.78rem;color:var(--slate);margin-top:2px}
+.extras-chevron{width:28px;height:28px;background:var(--bg);border-radius:50%;display:grid;place-items:center;transition:transform .3s}
+.extras-chevron svg{width:16px;height:16px;fill:var(--slate)}
+.extras-toggle.open .extras-chevron{transform:rotate(90deg)}
+.extras-content{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.extras-toggle.open .extras-content{max-height:1200px}
+.extras-inner{padding:0 32px 32px}
+
+.submit-section{text-align:center;padding:12px 0 0}
+.submit-btn{background:var(--primary);color:#fff;border:none;padding:16px 52px;border-radius:60px;font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;letter-spacing:.3px;transition:all .3s;box-shadow:0 8px 24px rgba(37,99,235,.2)}
+.submit-btn:hover{background:#1d4ed8;transform:translateY(-2px);box-shadow:0 12px 32px rgba(37,99,235,.3)}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
+.submit-note{font-size:.75rem;color:var(--slate);margin-top:12px}
+.submit-success{display:none;text-align:center;padding:48px 32px;background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius)}
+.submit-success .check-circle{width:64px;height:64px;background:#ecfdf5;border-radius:50%;display:grid;place-items:center;margin:0 auto 16px}
+.submit-success .check-circle svg{width:32px;height:32px;fill:var(--green)}
+.submit-success h2{font-size:1.4rem;margin-bottom:8px}
+.submit-success p{color:var(--slate);font-size:.95rem}
+
+.export-bar{display:flex;gap:12px;justify-content:flex-end;margin-bottom:20px}
+.export-btn{padding:9px 18px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--white);color:var(--ink);transition:all .2s;display:flex;align-items:center;gap:6px}
+.export-btn:hover{border-color:var(--primary);color:var(--primary)}
+.export-btn svg{width:14px;height:14px}
+
+@media print{
+  body{background:#fff}
+  .export-bar,.submit-section{display:none}
+  .q-section,.extras-toggle{break-inside:avoid;border-color:#ddd}
+  .extras-content{max-height:none!important}
+}
+@media(max-width:700px){
+  .page{padding:20px 12px 40px}
+  .q-section,.doc-header{padding:22px 18px}
+  .q-row,.q-row-3{grid-template-columns:1fr}
+  .doc-header-top{flex-direction:column;align-items:flex-start;gap:10px}
+  .extras-btn{padding:18px}
+  .extras-inner{padding:0 18px 22px}
+}
+</style>
+  <!-- Firebase SDK — loaded in <head> so it is guaranteed available before any body script runs -->
+  <script data-cfasync="false" src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script data-cfasync="false" src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+<div class="page">
+
+  <div class="export-bar">
+    <button class="export-btn" onclick="window.print()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print / PDF
+    </button>
+    <button class="export-btn" id="copyJsonBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      Copy Data
+    </button>
+  </div>
+
+  <div class="doc-header">
+    <div class="doc-header-top">
+      <div class="doc-brand">
+        <div class="brand-mark"><svg viewBox="0 0 24 24"><path d="M12 2C9.24 2 7 4.24 7 7c0 1.77.93 3.33 2.33 4.2C7.36 12.15 6 14.41 6 17c0 2.76 2.69 5 6 5s6-2.24 6-5c0-2.59-1.36-4.85-3.33-5.8A4.992 4.992 0 0017 7c0-2.76-2.24-5-5-5z"/></svg></div>
+        <div>Brechtland<span>Website as a Service</span></div>
+      </div>
+      <div class="doc-badge">Dental Setup</div>
+    </div>
+    <h1>Website Setup Form</h1>
+    <p>Fill out the essentials and we'll build your custom dental website. Everything else is optional.</p>
+    <div class="time-est">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      Takes about 5 minutes
+    </div>
+  </div>
+
+  <form id="mainForm" action="https://formspree.io/f/meelwrne" method="POST">
+
+    <!-- SECTION 1: PRACTICE -->
+    <div class="q-section">
+      <div class="section-header">
+        <div class="section-icon blue"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg></div>
+        <div class="section-header-text">
+          <h2>Your Practice</h2>
+          <p>Basic info that goes across the entire site</p>
+        </div>
+      </div>
+      <div class="q-row">
+        <div class="q-item">
+          <div class="q-label">Practice Name <span class="q-required">*</span></div>
+          <input class="q-field" name="practice_name" required placeholder="e.g. Bayshore Dental">
+        </div>
+        <div class="q-item">
+          <div class="q-label">Tagline / Slogan <span class="q-optional">(optional)</span></div>
+          <input class="q-field" name="tagline" placeholder="e.g. Care You Can Trust">
+        </div>
+      </div>
+      <div class="q-row">
+        <div class="q-item">
+          <div class="q-label">Lead Dentist Name <span class="q-required">*</span></div>
+          <input class="q-field" name="dentist_name" required placeholder="e.g. Dr. Sarah Adams">
+        </div>
+        <div class="q-item">
+          <div class="q-label">Title / Credentials <span class="q-required">*</span></div>
+          <input class="q-field" name="credentials" required placeholder="e.g. DDS, Lead Prosthodontist">
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: CONTACT -->
+    <div class="q-section">
+      <div class="section-header">
+        <div class="section-icon blue"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+        <div class="section-header-text">
+          <h2>Contact & Hours</h2>
+          <p>For the header, footer, and booking section</p>
+        </div>
+      </div>
+      <div class="q-item">
+        <div class="q-label">Full Address <span class="q-required">*</span></div>
+        <input class="q-field" name="address" required placeholder="e.g. 4521 Grand Blvd, Suite 200, New Port Richey, FL 34652">
+      </div>
+      <div class="q-row">
+        <div class="q-item">
+          <div class="q-label">Phone Number <span class="q-required">*</span></div>
+          <input class="q-field" name="phone" required placeholder="e.g. (727) 555-1234">
+        </div>
+        <div class="q-item">
+          <div class="q-label">Email Address <span class="q-required">*</span></div>
+          <input class="q-field" name="email" required type="email" placeholder="e.g. info@bayshoredental.com">
+        </div>
+      </div>
+      <div class="q-item">
+        <div class="q-label">Office Hours <span class="q-required">*</span></div>
+        <textarea class="q-field" name="hours" required placeholder="e.g. Mon–Fri: 8am–6pm&#10;Sat: 9am–2pm&#10;Sun: Closed"></textarea>
+      </div>
+    </div>
+
+    <!-- SECTION 3: SERVICES & STATS -->
+    <div class="q-section">
+      <div class="section-header">
+        <div class="section-icon blue"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg></div>
+        <div class="section-header-text">
+          <h2>Services & Stats</h2>
+          <p>Powers the service cards and trust badges</p>
+        </div>
+      </div>
+      <div class="q-item">
+        <div class="q-label">Top 3 services to feature <span class="q-required">*</span></div>
+        <div class="q-hint">These become the 3 main service cards on the homepage.</div>
+        <div class="q-row-3">
+          <input class="q-field" name="service_1" required placeholder="e.g. Cosmetic Dentistry">
+          <input class="q-field" name="service_2" required placeholder="e.g. Dental Implants">
+          <input class="q-field" name="service_3" required placeholder="e.g. Invisalign">
+        </div>
+      </div>
+      <div class="q-row-3">
+        <div class="q-item">
+          <div class="q-label">Years in Practice <span class="q-required">*</span></div>
+          <input class="q-field" name="years" required placeholder="e.g. 15+">
+        </div>
+        <div class="q-item">
+          <div class="q-label">Google Rating <span class="q-optional">(optional)</span></div>
+          <input class="q-field" name="rating" placeholder="e.g. 4.9">
+        </div>
+        <div class="q-item">
+          <div class="q-label">Patients Served <span class="q-optional">(optional)</span></div>
+          <input class="q-field" name="patients" placeholder="e.g. 12,000+">
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: REVIEWS -->
+    <div class="q-section">
+      <div class="section-header">
+        <div class="section-icon blue"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/></svg></div>
+        <div class="section-header-text">
+          <h2>Reviews & Quote</h2>
+          <p>For the testimonial and quote sections</p>
+        </div>
+      </div>
+      <div class="q-item">
+        <div class="q-label">1–2 patient reviews <span class="q-required">*</span></div>
+        <div class="q-hint">Include patient's first name if possible. These go in the testimonial section.</div>
+        <textarea class="q-field tall" name="reviews" required placeholder='"I used to dread the dentist. This team completely changed that — the staff is kind and I actually look forward to my appointments." — Sarah M., Patient since 2021'></textarea>
+      </div>
+      <div class="q-item">
+        <div class="q-label">Dentist philosophy quote <span class="q-optional">(optional)</span></div>
+        <div class="q-hint">A personal quote from the lead dentist for the homepage.</div>
+        <textarea class="q-field" name="quote" placeholder='"We treat every patient like family. Your comfort is always our first priority."'></textarea>
+      </div>
+    </div>
+
+    <!-- SECTION 5: PHOTOS -->
+    <div class="q-section">
+      <div class="section-header">
+        <div class="section-icon blue"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div>
+        <div class="section-header-text">
+          <h2>Photos</h2>
+          <p>For the hero, service cards, and team section</p>
+        </div>
+      </div>
+      <div class="q-item">
+        <div class="q-label">Will you provide photos? <span class="q-required">*</span></div>
+        <div class="radio-group">
+          <div class="radio-item"><input type="radio" name="photos" value="Yes — sending separately" required><label>Yes — I'll send them separately</label></div>
+          <div class="radio-item"><input type="radio" name="photos" value="Use stock photos"><label>Use stock photos for now</label></div>
+          <div class="radio-item"><input type="radio" name="photos" value="Getting photos taken soon"><label>I'll get photos taken soon</label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXTRAS (EXPANDABLE) -->
+    <div class="extras-toggle" id="extrasToggle">
+      <button type="button" class="extras-btn" id="extrasBtn">
+        <div class="extras-btn-left">
+          <div class="section-icon gold"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/></svg></div>
+          <div class="section-header-text">
+            <h2>Extra Customization</h2>
+            <p>Optional — click to expand</p>
+          </div>
+        </div>
+        <div class="extras-chevron"><svg viewBox="0 0 24 24"><path d="M10 6l6 6-6 6"/></svg></div>
+      </button>
+      <div class="extras-content">
+        <div class="extras-inner">
+
+          <div class="q-item" style="margin-top:8px">
+            <div class="q-label">Brand Colors <span class="q-optional">(optional)</span></div>
+            <div class="q-hint">Pick colors or describe them. Leave blank and we'll choose for you.</div>
+            <div class="color-row">
+              <div class="color-pick">
+                <div class="color-swatch" style="background:#2563eb"><input type="color" name="color_primary" value="#2563eb"></div>
+                <div class="cl">Primary</div>
+              </div>
+              <div class="color-pick">
+                <div class="color-swatch" style="background:#0f1c2e"><input type="color" name="color_dark" value="#0f1c2e"></div>
+                <div class="cl">Dark</div>
+              </div>
+              <div class="color-pick">
+                <div class="color-swatch" style="background:#e8a23e"><input type="color" name="color_accent" value="#e8a23e"></div>
+                <div class="cl">Accent</div>
+              </div>
+              <div style="flex:1">
+                <input class="q-field" name="color_notes" placeholder="Or describe: 'navy and gold', 'match our logo'" style="margin-top:4px">
+              </div>
+            </div>
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">Social Media Links <span class="q-optional">(optional)</span></div>
+            <div class="q-row">
+              <input class="q-field" name="facebook" placeholder="Facebook URL">
+              <input class="q-field" name="instagram" placeholder="Instagram URL">
+            </div>
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">Google Review Link <span class="q-optional">(optional)</span></div>
+            <input class="q-field" name="review_link" placeholder="https://g.page/yourpage/review">
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">Team Size <span class="q-optional">(optional)</span></div>
+            <div class="q-hint">Number shown in the "Meet the Team" section.</div>
+            <input class="q-field" name="team_size" placeholder="e.g. 5+ Specialists">
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">Total Google Reviews <span class="q-optional">(optional)</span></div>
+            <input class="q-field" name="review_count" placeholder="e.g. 312">
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">Legal Links <span class="q-optional">(optional)</span></div>
+            <div class="q-hint">Footer policy links — leave blank to use "#" placeholders.</div>
+            <div class="q-row">
+              <input class="q-field" name="privacy_url" placeholder="Privacy Policy URL">
+              <input class="q-field" name="terms_url" placeholder="Terms of Service URL">
+            </div>
+          </div>
+
+          <div class="q-item">
+            <div class="q-label">Anything else? <span class="q-optional">(optional)</span></div>
+            <textarea class="q-field" name="notes" placeholder="Special requests, extra pages, features, things to avoid..."></textarea>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-section" id="submitArea">
+      <button type="submit" class="submit-btn" id="submitBtn">Submit Questionnaire</button>
+      <p class="submit-note">We'll start building your site within 48–72 hours.</p>
+    </div>
+
+  </form>
+
+  <div class="submit-success" id="successMsg">
+    <div class="check-circle"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+    <h2>You're all set!</h2>
+    <p>We received your info and will start building your custom website. We'll be in touch soon.</p>
+  </div>
+
+</div>
+
+<script data-cfasync="false">
+// ── Firebase Init ─────────────────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyC1OP7Iq0hgSwfVxLkVNgBoXY5UytTmx2g",
+  authDomain: "albrecht-agency-crm.firebaseapp.com",
+  projectId: "albrecht-agency-crm",
+  storageBucket: "albrecht-agency-crm.firebasestorage.app",
+  messagingSenderId: "924889697457",
+  appId: "1:924889697457:web:b304fff585bfaa25c46690"
+};
+// Wait for Firebase SDK to be available, then init
+const _fbReady = new Promise(resolve => {
+  function tryInit() {
+    if (typeof firebase !== 'undefined') {
+      if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+      resolve(firebase.firestore());
+    } else {
+      setTimeout(tryInit, 50);
+    }
+  }
+  tryInit();
+});
+const repId = new URLSearchParams(window.location.search).get('repId');
+</script>
+
+<script>
+// EXTRAS TOGGLE
+document.getElementById('extrasBtn').addEventListener('click', () => {
+  document.getElementById('extrasToggle').classList.toggle('open');
+});
+
+// COLOR SWATCH SYNC
+document.querySelectorAll('.color-swatch input[type="color"]').forEach(input => {
+  input.addEventListener('input', () => { input.parentElement.style.background = input.value; });
+});
+
+// FORM SUBMIT TO FORMSPREE
+const form = document.getElementById('mainForm');
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  try {
+    // ── Firestore write ───────────────────────────────────────────
+    try {
+      const fd = new FormData(form);
+      const db = await _fbReady;
+      await db.collection('clients').add({
+        businessName:  fd.get('practice_name') || null,
+        email:         fd.get('email') || null,
+        phone:         fd.get('phone') || null,
+        industry:      'dental',
+        employeeId:    repId || null,
+        status:        'lead',
+        source:        'external_questionnaire',
+        createdAt:     firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } catch (fsErr) {
+      console.error('Firestore write failed:', fsErr);
+    }
+    // ── End Firestore write ───────────────────────────────────────
+
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      form.style.display = 'none';
+      document.querySelector('.export-bar').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Submit Questionnaire';
+      alert('Something went wrong. Please try again or contact us directly.');
+    }
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Submit Questionnaire';
+    alert('Connection error. Please check your internet and try again.');
+  }
+});
+
+// COPY DATA AS JSON
+document.getElementById('copyJsonBtn').addEventListener('click', () => {
+  const data = {};
+  for (const [key, value] of new FormData(form).entries()) {
+    if (value.trim()) data[key] = value.trim();
+  }
+  navigator.clipboard.writeText(JSON.stringify(data, null, 2)).then(() => {
+    const btn = document.getElementById('copyJsonBtn');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M20 6L9 17l-5-5"/></svg> Copied!';
+    setTimeout(() => { btn.innerHTML = orig; }, 2000);
+  });
+});
+</script>
+</body>
+</html>
